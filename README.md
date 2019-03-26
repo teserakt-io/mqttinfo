@@ -2,6 +2,15 @@
 
 mqttinfo is a command-line utility to retrieve information on an MQTT broker.
 
+To get the mqttinfo utility, you may run:
+
+```
+go get -u -v github.com/Teserakt-io/mqttinfo/cmd/mqttinfo
+```
+
+Otherwise, clone this repository and run `./scripts/build.sh` to build
+mqttinfo, then run it from `./bin/mqttinfo`.
+
 Usage:
 
 ```

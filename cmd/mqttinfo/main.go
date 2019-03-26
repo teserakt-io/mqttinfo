@@ -55,19 +55,23 @@ func main() {
 	}
 
 	if len(gitTag) == 0 {
-		fmt.Printf("MQTTinfo – version %v-%v\n", buildDate, gitCommit[:4])
+		fmt.Printf("MQTTinfo – version %v-%v\n", buildDate, gitCommit)
 	} else {
-		fmt.Printf("MQTTinfo – version %s (%v-%v)\n", gitTag, buildDate, gitCommit[:4])
+		fmt.Printf("MQTTinfo – version %s (%v-%v)\n", gitTag, buildDate, gitCommit)
 	}
 
 	fmt.Println("Copyright (c) Teserakt AG, 2019")
 
 	// info will hold the results of the analysis
-	b := mqttinfo.NewBrokerInfo(*hostname, *port, *username, *password)
+	b, err := mqttinfo.NewBrokerInfo(*hostname, *port, *username, *password)
+	if err != nil {
+		fmt.Printf("BrokerInfo creation failed: %v\n", err)
+		b.Failed = true
+		b.Error = err.Error()
+		return
+	}
 
 	fmt.Printf("\nTarget: %v:%v\n", b.Host, b.Port)
-
-	var err error
 
 	// v3.1.1 tests
 	fmt.Printf("\nChecking %v broker interface...\n", v4)

@@ -93,7 +93,7 @@ const (
 )
 
 // NewBrokerInfo creates a BrokerInfo with default values
-func NewBrokerInfo(hostname string, port int, username, password string) BrokerInfo {
+func NewBrokerInfo(hostname string, port int, username, password string) (*BrokerInfo, error) {
 	b := BrokerInfo{}
 	b.Host = hostname
 	b.Port = port
@@ -103,32 +103,15 @@ func NewBrokerInfo(hostname string, port int, username, password string) BrokerI
 	b.V4 = false
 	b.V5 = false
 
-	b.V4Anonymous = false
-	b.V4PublishSYS = false
 	b.V4FilterSYS = true
-	b.V4SubscribeAll = false
-	b.V4InvalidTopics = false
-	b.V4InvalidUTF8Topic = false
-	b.V4QoS1 = false
-	b.V4QoS2 = false
-	b.V4QoS3Response = false
-
-	b.V5Anonymous = false
-	b.V5PublishSYS = false
 	b.V5FilterSYS = true
-	b.V5SubscribeAll = false
-	b.V5InvalidTopics = false
-	b.V5InvalidUTF8Topic = false
-	b.V5QoS1 = false
-	b.V5QoS2 = false
-	b.V5QoS3Response = false
-
 	b.TypeGuessed = "unknown"
 
-	b.Failed = false
 	b.Error = ""
 
-	return b
+	// Boolean values default to false
+
+	return &b, nil
 }
 
 // varint encoding, this function copied from https://github.com/eclipse/paho.mqtt.golang
@@ -259,7 +242,10 @@ func (b *BrokerInfo) connectV5() (net.Conn, error) {
 		return nil, err
 	}
 
-	conn.Write(b.getConnectV5())
+	_, err = conn.Write(b.getConnectV5())
+	if err != nil {
+		return nil, fmt.Errorf("CONNACK read failed: %v", err)
+	}
 	connack := make([]byte, 100)
 	_, err = conn.Read(connack)
 	if err != nil {
