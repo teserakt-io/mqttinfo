@@ -62,4 +62,4 @@ capabilities.
 
 mqttinfo is copyright (c) 2019, Teserakt AG.
 
-The code is released under AGPLv2, please [contact us](mailto:contact@teserakt.io) if that's an issue for you.
+The code is released under AGPLv3, please [contact us](mailto:contact@teserakt.io) if that's an issue for you.
