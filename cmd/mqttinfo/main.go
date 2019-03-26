@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/pflag"
 
+	mqttinfo "github.com/Teserakt-io/mqttinfo/pkg/mqttinfolib"
 	au "github.com/logrusorgru/aurora"
-	mqttinfo "gitlab.com/teserakt/mqttinfo/pkg/mqttinfolib"
 )
 
 // variables set at build time
