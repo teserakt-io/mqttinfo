@@ -31,7 +31,7 @@ Current limitations:
 
 To analyze a remote broker, you can for example do the following:
 
- ![](example.png)
+<img src="example.png" width=400>
 
 Please note that the last step (product detection) may take up to a
 minute, because it's awaiting for the publication of messages from the
